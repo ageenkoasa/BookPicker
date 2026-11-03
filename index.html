@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Книжные предсказания</title>
+		<link rel="stylesheet" href="css/styles.css" />
+	</head>
+	<body>
+		<h1>Библиомантия</h1>
+		<div class="subtitle">Расклад на ваше следующее книжное путешествие</div>
+
+		<div class="controls">
+			<button class="btn-sub" onclick="App.toggleCabinet()">
+				🕮 Личный кабинет
+			</button>
+		</div>
+
+		<div class="container">
+			<!-- Секция ввода -->
+			<div id="input-section">
+				<label>Список книг:</label>
+				<div id="book-list-root"></div>
+				<button class="btn" onclick="App.buildDeck()" style="margin-top: 20px">
+					Сформировать колоду
+				</button>
+			</div>
+
+			<!-- Секция расклада -->
+			<div id="layout-section">
+				<div class="controls">
+					<button class="btn-sub" onclick="App.backToInput()">
+						← Изменить список книг
+					</button>
+					<button class="btn-sub" onclick="App.reshuffleDeck()">
+						↻ Перемешать колоду заново
+					</button>
+				</div>
+				<div class="grid" id="cards-grid"></div>
+			</div>
+
+			<!-- Секция кабинета -->
+			<div id="cabinet-section">
+				<div class="cabinet-panel">
+					<h2>Прочитанные книги</h2>
+					<div id="cabinet-content"></div>
+					<button
+						class="btn-sub"
+						onclick="App.toggleCabinet()"
+						style="margin-top: 20px"
+					>
+						← Назад
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Модальное окно -->
+		<div class="modal" id="book-modal" onclick="BookModal.close(event)">
+			<div class="modal-content" onclick="event.stopPropagation()">
+				<span class="modal-close" onclick="BookModal.close(null)">&times;</span>
+				<div class="modal-flex">
+					<div class="modal-img-container" id="modal-cover-box">
+						<img src="" alt="" class="modal-img" id="modal-img" />
+					</div>
+					<div class="modal-info">
+						<h2 class="modal-title" id="modal-title">Название книги</h2>
+						<div class="modal-author" id="modal-author">Автор книги</div>
+						<div class="modal-desc-label">Аннотация</div>
+						<div class="modal-description" id="modal-description">
+							Загрузка информации...
+						</div>
+						<div class="modal-actions">
+							<button class="btn-sub" onclick="BookModal.selectCurrent()">
+								✓ Выбрать эту книгу
+							</button>
+							<input
+								type="file"
+								id="modal-cover-input"
+								accept="image/*"
+								style="display: none"
+								onchange="BookModal.handleCoverUpload(event)"
+							/>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Универсальное модальное окно для подтверждений и уведомлений -->
+		<div class="modal" id="dialog-modal" onclick="Dialog.close(event)">
+			<div
+				class="modal-content dialog-content"
+				onclick="event.stopPropagation()"
+			>
+				<h2 class="dialog-title" id="dialog-title">Заголовок</h2>
+				<div class="dialog-message" id="dialog-message">Сообщение</div>
+				<div class="dialog-actions" id="dialog-actions"></div>
+			</div>
+		</div>
+
+		<!-- Подключение скриптов (порядок важен) -->
+		<script src="js/utils.js"></script>
+		<script src="js/stores.js"></script>
+		<script src="js/sound.js"></script>
+		<script src="js/translator.js"></script>
+		<script src="js/dialog.js"></script>
+		<script src="js/book-list.js"></script>
+		<script src="js/deck.js"></script>
+		<script src="js/book-modal.js"></script>
+		<script src="js/cabinet.js"></script>
+		<script src="js/app.js"></script>
+	</body>
+</html>
